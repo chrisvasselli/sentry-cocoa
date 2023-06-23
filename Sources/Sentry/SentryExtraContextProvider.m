@@ -58,11 +58,13 @@ SentryExtraContextProvider ()
     extraDeviceContext[@"processor_count"] = @([self.processInfoWrapper processorCount]);
 
 #if TARGET_OS_IOS
+#if !TARGET_OS_XR
     if (self.deviceWrapper.orientation != UIDeviceOrientationUnknown) {
         extraDeviceContext[@"orientation"]
             = UIDeviceOrientationIsPortrait(self.deviceWrapper.orientation) ? @"portrait"
                                                                             : @"landscape";
     }
+#endif
 
     if (self.deviceWrapper.isBatteryMonitoringEnabled) {
         extraDeviceContext[@"charging"]

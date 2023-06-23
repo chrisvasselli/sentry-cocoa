@@ -270,7 +270,7 @@ SentryCrashIntegration ()
     NSString *locale = [[NSLocale autoupdatingCurrentLocale] objectForKey:NSLocaleIdentifier];
     [deviceData setValue:locale forKey:LOCALE_KEY];
 
-#if SENTRY_HAS_UIDEVICE
+#if SENTRY_HAS_UIDEVICE && !TARGET_OS_XR
 
     NSArray<UIWindow *> *appWindows = SentryDependencyContainer.sharedInstance.application.windows;
     if ([appWindows count] > 0) {

@@ -56,10 +56,12 @@ SentrySystemEventBreadcrumbs ()
                                               name:UIDeviceBatteryLevelDidChangeNotification];
     [self.notificationCenterWrapper removeObserver:self
                                               name:UIDeviceBatteryStateDidChangeNotification];
+#if !TARGET_OS_XR
     [self.notificationCenterWrapper removeObserver:self
                                               name:UIDeviceOrientationDidChangeNotification];
     [self.notificationCenterWrapper removeObserver:self
                                               name:UIDeviceOrientationDidChangeNotification];
+#endif
 #endif
 }
 
@@ -80,7 +82,9 @@ SentrySystemEventBreadcrumbs ()
     _delegate = delegate;
     if (currentDevice != nil) {
         [self initBatteryObserver:currentDevice];
+#if !TARGET_OS_XR
         [self initOrientationObserver:currentDevice];
+#endif
     } else {
         SENTRY_LOG_DEBUG(@"currentDevice is null, it won't be able to record breadcrumbs for "
                          @"device battery and orientation.");
@@ -150,6 +154,8 @@ SentrySystemEventBreadcrumbs ()
     return batteryData;
 }
 
+#if !TARGET_OS_XR
+
 - (void)initOrientationObserver:(UIDevice *)currentDevice
 {
     if (currentDevice.isGeneratingDeviceOrientationNotifications == NO) {
@@ -185,6 +191,8 @@ SentrySystemEventBreadcrumbs ()
     crumb.type = @"navigation";
     [_delegate addBreadcrumb:crumb];
 }
+
+#endif
 
 - (void)initKeyboardVisibilityObserver
 {
