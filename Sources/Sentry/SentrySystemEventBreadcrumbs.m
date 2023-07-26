@@ -56,7 +56,7 @@ SentrySystemEventBreadcrumbs ()
                                               name:UIDeviceBatteryLevelDidChangeNotification];
     [self.notificationCenterWrapper removeObserver:self
                                               name:UIDeviceBatteryStateDidChangeNotification];
-#if !TARGET_OS_XR
+#if !TARGET_OS_VISION
     [self.notificationCenterWrapper removeObserver:self
                                               name:UIDeviceOrientationDidChangeNotification];
     [self.notificationCenterWrapper removeObserver:self
@@ -82,7 +82,7 @@ SentrySystemEventBreadcrumbs ()
     _delegate = delegate;
     if (currentDevice != nil) {
         [self initBatteryObserver:currentDevice];
-#if !TARGET_OS_XR
+#if !TARGET_OS_VISION
         [self initOrientationObserver:currentDevice];
 #endif
     } else {
@@ -154,7 +154,7 @@ SentrySystemEventBreadcrumbs ()
     return batteryData;
 }
 
-#if !TARGET_OS_XR
+#if !TARGET_OS_VISION
 
 - (void)initOrientationObserver:(UIDevice *)currentDevice
 {

@@ -26,7 +26,7 @@ SentryUIDeviceWrapper ()
     if (self = [super init]) {
         self.dispatchQueueWrapper = dispatchQueueWrapper;
         [self.dispatchQueueWrapper dispatchSyncOnMainQueue:^{
-#if !TARGET_OS_XR
+#if !TARGET_OS_VISION
             // Needed to read the device orientation on demand
             if (!UIDevice.currentDevice.isGeneratingDeviceOrientationNotifications) {
                 self.cleanupDeviceOrientationNotifications = YES;
@@ -47,7 +47,7 @@ SentryUIDeviceWrapper ()
 - (void)stop
 {
     [self.dispatchQueueWrapper dispatchSyncOnMainQueue:^{
-#if !TARGET_OS_XR
+#if !TARGET_OS_VISION
         if (self.cleanupDeviceOrientationNotifications) {
             [UIDevice.currentDevice endGeneratingDeviceOrientationNotifications];
         }
@@ -65,7 +65,7 @@ SentryUIDeviceWrapper ()
 
 - (UIDeviceOrientation)orientation
 {
-#if TARGET_OS_XR
+#if TARGET_OS_VISION
     return UIDeviceOrientationUnknown;
 #else
     return UIDevice.currentDevice.orientation;
